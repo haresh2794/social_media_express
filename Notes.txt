@@ -16,10 +16,20 @@ How to add a common layout file?
  - npm install express-ejs-layouts
  - const expressLayouts = require('express-ejs-layouts')
  - app.use(expressLayouts)
+ - and in the layout file put a <%-body %> inside the body tag
 
 How to stay organized in in routing the site?
  - Create a seperate Router
  - router.js
+ - in router.js
+   const express = require('express')
+   const router = express.Router() // this will initiate the express router app
+ - then we can create the routers
+ - in the server file or the app.js we will put the command  --- 
+    const router = require('./router')
+    app.use('/',router)
+ - IMPORTANT in router.js we must put the exporter command.   module.exports = router
+
 
 How to install Bootsrap?
  - 
