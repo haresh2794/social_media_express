@@ -1,0 +1,25 @@
+What are the things that a app will require?
+ - Orginization
+ - Unique data per user
+ - Attention to detail
+
+How to start up a complex app?
+ - Create a app.js file
+ - npm init -y creates the package.json file
+ - npm instal express
+ - We import express __ const express = require('express')
+ - Create an app __ const app = express()
+ - initiate a get request __ app.get('/', function(req,res){})
+ - app.listen(3000)
+
+How to add a common layout file?
+ - npm install express-ejs-layouts
+ - const expressLayouts = require('express-ejs-layouts')
+ - app.use(expressLayouts)
+
+How to stay organized in in routing the site?
+ - Create a seperate Router
+ - router.js
+
+How to install Bootsrap?
+ - 
