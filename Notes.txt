@@ -41,12 +41,17 @@ Why we need a model folder?
   logics
  - We include all the business logics for the data. rules that we enforce on a data. Modeling the data. 
  (Email size, username lentgh etc)
+ - The model will create a blue print on how the data should be and the controller can validate it
+ - We use upper case to represent the blueprint ex User.js and when creatng a obj we have as let user = new User()
 
 What is MVC?
  - Model view controller, It is a standard to organize the data. But is not really compulsory. We built the first app with 
  no Orginization. But that leads to headache when reffered again.
 
-
+How to make an app accept data?
+ - in the server file (app.js)
+ - app.use(express.urlencoded({extended:false})) //for HTML data -the blah blah code
+ - app.use(express.json()) // for json data 
 
 
 

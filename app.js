@@ -5,6 +5,13 @@ const expressLayouts = require('express-ejs-layouts')
 const app = express()
 //console.log(router) //What is exported is going to get stored in the variable
 //router.meow() //We can use the function in the router file.
+
+//Start accptiing HTMl and json text
+app.use(express.urlencoded({extended:false})) //The blahh blah code to the body access, accepts traditional HTML
+app.use(express.json()) //and accepts json data //blah blah 2
+
+
+
 app.use(express.static('public')) //We are calling the public file
 app.use(expressLayouts)
 app.set('views','views') //the frst arg is a express arg and then the second is the folder
