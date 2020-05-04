@@ -53,6 +53,11 @@ How to make an app accept data?
  - app.use(express.urlencoded({extended:false})) //for HTML data -the blah blah code
  - app.use(express.json()) // for json data 
 
+What can be used instead of RE in email validation?
+ - npm install validator
+
+What are the steps in before saving to a DB?
+ - Validating and then cleaning up the data
 
 
 
