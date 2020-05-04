@@ -30,6 +30,26 @@ How to stay organized in in routing the site?
     app.use('/',router)
  - IMPORTANT in router.js we must put the exporter command.   module.exports = router
 
+Why we use controllers folder?
+ - We need to only have the routes in the router file and the functions should be in a seperate file.
+ - It seems unecessary but is very important. It is the middleman that tells what to model and view and gets the routes signal. 
+ it converts the network req and covert them to appropriate commands for models(logics on data) and views and then pass the relevant data.
+
+Why we need a model folder?
+ - Here for example for registering we need a seperate process like username approval checking email verification. and 
+  we cannot give all these logics in the controller folder and therefore we need a model folder to handle the
+  logics
+ - We include all the business logics for the data. rules that we enforce on a data. Modeling the data. 
+ (Email size, username lentgh etc)
+
+What is MVC?
+ - Model view controller, It is a standard to organize the data. But is not really compulsory. We built the first app with 
+ no Orginization. But that leads to headache when reffered again.
+
+
+
+
+
 
 How to install Bootsrap?
  - 
