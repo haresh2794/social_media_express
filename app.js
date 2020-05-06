@@ -28,4 +28,5 @@ app.get('/', function(req,res){
 
 app.use('/',router) //1 which url, 2. the router file. The router file contains the express Js initiated Router
 
-app.listen(3000)
+module.exports = app //Instead of the below line here we call it after establishing the connection with DB
+//app.listen(3000)

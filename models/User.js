@@ -9,6 +9,7 @@ let User = function(){ //This will be the blue print for our user object
 User.prototype.jump = function(){} //This is the recommend way so every obj created will have access to this method. But each obj will not have a seperate jump()
 
 */
+const userCollection = require('../db').collection('users')
 const validator = require("validator")
 const User = function(data){ //This is the constructor
     this.data = data
@@ -24,7 +25,7 @@ User.prototype.cleanUp = function(){ //Cleaning up before validation
     //get rid of any bogus properties ,example is user send a name: Haresh
     this.data = {
         username: this.data.username.trim().toLowerCase(), //getting rid of spaces trim() and convrt to lowercase
-        email: this.data.username.trim().toLowerCase(),
+        email: this.data.email.trim().toLowerCase(),
         password: this.data.password 
     }
 
@@ -54,6 +55,9 @@ User.prototype.register = function(){
 
     //Step 2 = Only if there are no validation errors
     //Save user data into a database
+    if(!this.errors.length){
+        userCollection.insertOne(this.data) //This will run to save to the DB is there is no error
+    }
 }
 
 module.exports = User // This will require to connect into a other file,, here it is controller

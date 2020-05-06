@@ -59,7 +59,13 @@ What can be used instead of RE in email validation?
 What are the steps in before saving to a DB?
  - Validating and then cleaning up the data
 
+How to stay orginized with DB?
+ - Have the connections built in a db.js file
+ - then call the listen of app from db.js so the db is connected before the launch
+ - Then change the package.json watch to run the db file
 
+What is the security issue with having db connection files open in db.js?
+ - Anyone can access
 
 How to install Bootsrap?
  - 
