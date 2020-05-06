@@ -67,5 +67,16 @@ How to stay orginized with DB?
 What is the security issue with having db connection files open in db.js?
  - Anyone can access
 
+How to secure it?
+ - npm install dotenv
+ - const dotenv = require('dotenv')
+ - dotenv.config()
+ - create a .env file in the folder
+ - add the variable example if it is the connectionSting type CONNECTIONSTRING=efwfawsfcas
+ - to call it type process.env.CONNECTIONSTRING
+
+Why do we need .env
+ - ignore the .env in before pushing
+
 How to install Bootsrap?
  - 
