@@ -11,13 +11,10 @@ app.use(express.urlencoded({extended:false})) //The blahh blah code to the body 
 app.use(express.json()) //and accepts json data //blah blah 2
 
 
-
 app.use(express.static('public')) //We are calling the public file
 app.use(expressLayouts)
 app.set('views','views') //the frst arg is a express arg and then the second is the folder
 app.set('view engine','ejs') //then we need to set the view engine ,,here it is ejs
-
-
 
 /*
 //We delete this after the new router

@@ -11,10 +11,27 @@ module.exports = {
 
 const User = require('../models/User') //We need to mode a folder up... That why we have two dots
 
-exports.login = function(){
-    
+//Using a promise
+exports.login = function(req,res){//This is what will be done in promise
+    let user = new User(req.body) 
+    user.login().then(function(result){
+        res.send(result) //If it is resolves
+    }).catch(function(err){
+        res.send(err)//If it is rejected
+    }) 
+
 }
 
+/**
+ Call Back APPROCH
+exports.login = function(req,res){
+    let user = new User(req.body) //We are calling the model file
+    user.login(function(result){
+        res.send(result) //We do this after the User.js does the thing. This is the traditional approch
+    }) //We will create a login function in the model
+
+}
+*/
 exports.logout = function(){
     
 }

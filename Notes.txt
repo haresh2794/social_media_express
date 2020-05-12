@@ -76,7 +76,76 @@ How to secure it?
  - to call it type process.env.CONNECTIONSTRING
 
 Why do we need .env
- - ignore the .env in before pushing
+ - ignore the .env in before pushing, To keep the credential safe
+
+How to create a Login form?
+ - Edit the view to send a post request to the router
+ - set the router to a post request to the url and the function to the controller
+ - Create the function req res in the controller and divert the validation to the Model
+ - Create the validation action and send the return using a promise(new methd) or a callback function(Trad methd)
+ - send the response
+
+How a callback works in User.js?
+ - We create a function with a variable and call a callabck in another place to set the return through the call back
+ - The controller will get the callback and send the respose through res. 
+ - This is done in login cases and many other cases. 
+ - This is the Traditional Apporch
+
+How to create promise? (this will play a major part)
+ - At the User.js we create a return to new promise with a function with two args resolve and reject. 
+ - Return values to resolve and reject (Check the code in User.js)
+ - then use that to create a .then({}).catch({}) in the usercontroller
+
+How to create a promise to connect with db?
+ - Use the same then(input the arrow fucntion to conncet db and show the result is posituve or negative).cathc(If there is a error in db(NOT USER) return a function)
+ - This is done in User.js file.
+ - Previously we had the traditional code with the data passes in and the function with err and user.
+ - The mongo db has promise in it and we are just leveraging it in this case
+
+What is the big deal with promise compared to promises?
+ - In promises we don't nest infinitly the codes that needs to be excected in order. We just use .then(function(){return function}).then() to chain it.
+ - https://codepen.io/anon/pen/wbOzrp?editors=0010, https://codepen.io/anon/pen/eabJgY?editors=0010 | Check these links for explaination. In Call back it is nested inside. In promise it is chained
+
+How to use arrow func?
+ - Arrow function doesnot need {} if it is on the same line. no need return 
+ eatBreakfast().then(()=> eatLunch()).then(()=> eatDinner())
+
+How to create a async function?
+ - put async before function
+ async function runOurFunc(){
+  await eatBreakfast()
+  await eatLunch()
+  await eatDinner()
+  eatDessert() 
+}
+runOurFunc()
+Here await will not run the next line till this is excecuted , BUT will only work inside a async function.
+To see action we need to call the function
+
+But How to handle error in this case?
+ - Use a try catch block
+async function runOurFunc(){
+  try {
+    await eatBreakfast()
+    await eatLunch()
+    await eatDinner()
+    await eatDessert()
+  } catch(err){
+    console("Error")
+  }
+   
+}
+
+How to install Hashing package?
+ - npm install bcryptjs
+
+How to start using Hasing package in register?
+ - const bcrypt = require("bcryptjs") | in Model file for User.js
+ - The process has two steps, Creating the salt, the hashing the pass with the salt
+ - let salt = bcrypt.genSaltSync(10)
+ - this.data.password = bcrypt.hashSync(this.data.password,salt) 
+How to facilitate login in Hashing?
+ - bcrypt.compareSync(this.data.password,attemtedUser.password) | at the login model function in the if statement
 
 How to install Bootsrap?
- - 
+ - Check the view folder to see how. We just copy pasted the stuff
