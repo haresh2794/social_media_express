@@ -1,8 +1,21 @@
 const express = require('express') //a const cannot be reassigned
+const session = require('express-session') //Importing Express Sessions
+const MongoStore = require('connect-mongo')(session)
 const router = require('./router')
 const expressLayouts = require('express-ejs-layouts')
 
 const app = express()
+
+let sessionOptions = session({ //Setting up the configurations for session 
+    secret: "JavaScript is so cool",
+    store: new MongoStore({client: require('./db')}), //creating the storage location, deafualt is server memory
+    resave: false,
+    saveUninitialized: false, 
+    cookie: {maxAge: 1000*60*60*24, httpOnly:true} //How long the cook should stay
+})
+
+app.use(sessionOptions) //Using the session function
+
 //console.log(router) //What is exported is going to get stored in the variable
 //router.meow() //We can use the function in the router file.
 

@@ -144,8 +144,75 @@ How to start using Hasing package in register?
  - The process has two steps, Creating the salt, the hashing the pass with the salt
  - let salt = bcrypt.genSaltSync(10)
  - this.data.password = bcrypt.hashSync(this.data.password,salt) 
+
 How to facilitate login in Hashing?
  - bcrypt.compareSync(this.data.password,attemtedUser.password) | at the login model function in the if statement
 
+What kind is HTTPS request?
+ - It is a stateless request, it will not have memory of what happened Previously
+
+What is trusting a Request?
+ - Keeping a state for a period of time. Exmple a Login requst, The user is kept logged in till he logs out
+ - Make the server trust the subsiquest request to do logged in funtionality, exapme User accountt features
+
+How can we trust or identify requests?
+ - Sessions
+ - Tokens
+
+How to enable Session in a app?
+ - npm install express-session | Step 1
+
+How to use the Session Package?
+ - in the Server file (app.ja in this case)
+ - import the package to app.js
+ - Setting up the configurations for session 
+ - Using the session function, app.user(sessionOption) 
+ Check the app.js for details code.
+
+How to controler and hold the session?
+ - After we set the server configurations we need to put up things is the Controller file.
+ - Create a object at the login. req.session.user 
+ - Use this obj to sent the renders of view. 
+    exports.home = function(req,res){
+      if (req.session.user){
+        res.send("Welcome to app!")
+  Check usercontroller.js for details
+
+How cookies work to create trust between the server and browser?
+ - When a session is started the server will send session obj to the browser and the browser will save it as a cooky this cookie will be used 
+ to exchange req and res between server and browser later on till they expire as in config. 
+
+Why we need to store session data in a db?
+ - If we save it in the memory in the server we will loose the session if the server restrats
+
+How to store session data in DB?
+ - npm install connect-mongo
+ - Then to use we need to require it in the server file of the app(app.js). 
+ - modify the config at server file add the client| store: new MongoStore({client: require('./db')})
+ - Then remove the .db() at the db file after client
+ - Since the db() is removed at db, add it at the Model file during export. |  const userCollection = require('../db').db().collection('users')
+ If you check the DB there will be a session collection created and in the session data you will have the config details.
+  The id is the session id. This id will be equal to the id in the cookies of the browser if you check cookies.
+
+How the trust is created?
+ - The id is the session id that is in db. This id will be equal to the id in the cookies of the browser if you check cookies.
+ - Thats how the data is trasfered to the between trusted server and browser.
+
+How to seperate Headers in dif sessions?
+ - Use if statement and return a true at render
+How to pass in values of user to the ejs file?
+ - within the obj at render, create the necessay obj atributes
+
+How to create a logout?
+ - at the form in the ejs file add the url
+ - create the router post request
+ - in the usercontroller export logout function add the destroy session and add the redirect func inside the destroy so it will get excecuted after the destroy
+
+How to redirect in login?
+ - The session above will auto save, but we will save manually and then gve the asyn function some time to do it and then redirect to the url
+
+
+
 How to install Bootsrap?
  - Check the view folder to see how. We just copy pasted the stuff
+

@@ -17,7 +17,7 @@ const userController = require('./controllers/userController')
 router.get('/', userController.home)
 router.post('/login',userController.login) //a Login post request from the view
 router.post('/register',userController.register) //We forwarded the register form action to the /register url. Here we use the function in the userController
-
+router.post('/logout',userController.logout)
 
 
 

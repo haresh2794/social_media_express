@@ -15,7 +15,10 @@ const User = require('../models/User') //We need to mode a folder up... That why
 exports.login = function(req,res){//This is what will be done in promise
     let user = new User(req.body) 
     user.login().then(function(result){
-        res.send(result) //If it is resolves
+        req.session.user = {favColor: "Blue", username: user.data.username} //This is how the sessiion is leverged
+        req.session.save(function(){ //The above will auto save, but we will save manually and then gve the asyn function some time to do it and then redirect to the url
+            res.redirect('/')
+        }) //If it is resolves
     }).catch(function(err){
         res.send(err)//If it is rejected
     }) 
@@ -32,8 +35,12 @@ exports.login = function(req,res){
 
 }
 */
-exports.logout = function(){
+exports.logout = function(req,res){
+    req.session.destroy(function(){ //Now we redirect after the destroy
+        res.redirect('/')
+    })
     
+    //res.send("You are now logged out")
 }
 
 exports.register = function(req,res){
@@ -51,5 +58,9 @@ exports.register = function(req,res){
 }
 
 exports.home = function(req,res){
-    res.render('index')
+    if (req.session.user){
+        res.render('userhome',{userlog: true, username: req.session.user.username}) //If it is inside a session //The true is returned to controller the header
+    }else{
+        res.render('index', {userlog: false}) //Else show this
+    }
 }

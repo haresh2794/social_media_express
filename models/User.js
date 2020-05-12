@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs") //Hashing package
-const userCollection = require('../db').collection('users')
+const userCollection = require('../db').db().collection('users')
+//const userCollection = require('../db').collection('users')
 const validator = require("validator")
 const User = function(data){ //This is the constructor
     this.data = data
