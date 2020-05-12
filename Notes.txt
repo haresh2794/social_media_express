@@ -211,6 +211,29 @@ How to create a logout?
 How to redirect in login?
  - The session above will auto save, but we will save manually and then gve the asyn function some time to do it and then redirect to the url
 
+How to implement flash message?
+ - npm install connect-flash
+ - require the package at app.js
+ - app.use(flash())
+
+How to create a flash message at false login?
+ - req.flash('errors',err) //at the catch of login, This will create a session in the DB for failed auth
+ - req.session.save(function(){ //we can use anything instead od 'errors', this is the collection name
+            res.redirect('/')
+        }) //This will callback and we are manually saving the session. 
+ - There will be a failed login session store in DB
+
+How to render the message in the screen?
+ - at the render create the obj that with the error msg. and use it at the page. 
+  <% errors.forEach(function(message){ %>
+    <div class="alert alert-danger text-center"><%=message%></div>
+  <% }) %>
+ - The error mesage will be deleted once accessed. THATS THE BRILLIENCE OF FLASH PACKAGE
+
+Why is it necessary to do flash at server side?
+ - We can use browser side too, but just to enhance user experience. But serverside is necessary in case user diables js flash in browser
+  Server side for security, browser for user enhance
+
 
 
 How to install Bootsrap?

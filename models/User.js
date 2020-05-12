@@ -62,7 +62,7 @@ User.prototype.login = function(){
             if (attemtedUser && bcrypt.compareSync(this.data.password,attemtedUser.password)){ //using Hash comparison //attemtedUser.password == this.data.password We deleted this after &&
                 resolve("Congratsx") 
             }else{
-                reject("HOLYSHIT WROOONG")
+                reject("Invalid Username/Password")
             }
         }).catch(function(){
             reject("Please try again Later")

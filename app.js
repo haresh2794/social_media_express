@@ -3,7 +3,7 @@ const session = require('express-session') //Importing Express Sessions
 const MongoStore = require('connect-mongo')(session)
 const router = require('./router')
 const expressLayouts = require('express-ejs-layouts')
-
+const flash = require('connect-flash')
 const app = express()
 
 let sessionOptions = session({ //Setting up the configurations for session 
@@ -15,7 +15,7 @@ let sessionOptions = session({ //Setting up the configurations for session
 })
 
 app.use(sessionOptions) //Using the session function
-
+app.use(flash()) //Leverage the flash
 //console.log(router) //What is exported is going to get stored in the variable
 //router.meow() //We can use the function in the router file.
 

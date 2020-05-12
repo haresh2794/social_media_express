@@ -20,9 +20,14 @@ exports.login = function(req,res){//This is what will be done in promise
             res.redirect('/')
         }) //If it is resolves
     }).catch(function(err){
-        res.send(err)//If it is rejected
+        req.flash('errors',err) // This will create a flash package with the err mesg, we can use anything instead od 'errors', this is the collection name
+        //req.session.flash.errors = [err] //This is what is done actually in flash
+        req.session.save(function(){ //This is the call back func
+            res.redirect('/')
+        })
+        //res.redirect('/') We need to give time to redirect, so manual save and thn redirect
+        //res.send(err)//If it is rejected
     }) 
-
 }
 
 /**
@@ -47,7 +52,20 @@ exports.register = function(req,res){
     let user = new User(req.body) //the new operator will create a object with User() blueprint WE CAPITALIZE BLUE PRINT
     user.register()
     if (user.errors.length>0){ //if the array is not empty we send the error
-        res.send(user.errors)
+        user.errors.forEach(function(err){
+            req.flash('RegErrors',err)
+        })
+        req.session.save(function(){
+            res.redirect('/')
+        })
+
+        /*THis can also be done but it will show mesg individually
+        req.flash('errors',user.errors)
+        req.session.save(function(){
+            res.redirect('/')
+        })
+        */
+        //res.send(user.errors)
     } else {
         res.send("Congrats") //Else sucess
     }
@@ -61,6 +79,6 @@ exports.home = function(req,res){
     if (req.session.user){
         res.render('userhome',{userlog: true, username: req.session.user.username}) //If it is inside a session //The true is returned to controller the header
     }else{
-        res.render('index', {userlog: false}) //Else show this
+        res.render('index', {userlog: false, errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
     }
 }
