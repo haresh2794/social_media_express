@@ -23,7 +23,7 @@ User.prototype.cleanUp = function(){ //Cleaning up before validation
 
 
 //Validation
-User.prototype.validate = function(){ //Validating the data
+User.prototype.validate = async function(){ //Validating the data
     if (this.data.username == ""){this.errors.push("You must enter a valid username")} //we are adding to the array of errors
     if (this.data.username != "" && !validator.isAlphanumeric(this.data.username)){this.errors.push("Uesr name can only contain letters and numbers")}
     if (!validator.isEmail(this.data.email)){this.errors.push("You must enter a valid email")} //is a valid email
@@ -34,6 +34,18 @@ User.prototype.validate = function(){ //Validating the data
     if (this.data.username.length > 0 && this.data.username.length <3){this.errors.push("username must be atleast 3 charaters")}
     if (this.data.username.length>30) {this.errors.push("Too Long Username")}
 
+
+    //Only if email is vvalid then check to see if it is already taken
+    if(validator.isEmail(this.data.email)){
+        let emailExists = await userCollection.findOne({email: this.data.email}) //Here we are using the promise feature so we put a await and change the main func to async
+        if (emailExists){this.errors.push("Email already taken")} //This will execute after the above
+    }
+
+    //Only if username is vvalid then check to see if it is already taken
+    if(this.data.username.length>2 && this.data.username.length<31 && validator.isAlphanumeric(this.data.username)){
+        let usernameExists = await userCollection.findOne({username: this.data.username}) //Here we are using the promise feature so we put a await and change the main func to async
+        if (usernameExists){this.errors.push("Username taken")} //This will execute after the above
+    }
 }
 
 
@@ -41,7 +53,8 @@ User.prototype.validate = function(){ //Validating the data
 User.prototype.register = function(){
     //Step 1 = Validate User data
     this.cleanUp()
-    this.validate()
+    this.validate() //Since we added async func we need to make sure this func is completed before moving to next
+    
 
     //Step 2 = Only if there are no validation errors
     //Save user data into a database

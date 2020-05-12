@@ -234,7 +234,13 @@ Why is it necessary to do flash at server side?
  - We can use browser side too, but just to enhance user experience. But serverside is necessary in case user diables js flash in browser
   Server side for security, browser for user enhance
 
+How to check the db to see wherther the email or password is taken?
+ - use the args within if and use fineOne to chck. and return a error at the Model file of users.
+ - Check the model file
 
+What are the consideration when using async feature?
+ - Since we use async feature that will create the other features to take place parallely. So when using such func we need to make secure
+ that the func is completed before moving to the other func.
 
 How to install Bootsrap?
  - Check the view folder to see how. We just copy pasted the stuff
