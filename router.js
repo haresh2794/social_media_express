@@ -21,8 +21,9 @@ router.post('/register',userController.register) //We forwarded the register for
 router.post('/logout',userController.logout)
 
 //POST RELATED ROUTES
-router.post('/create-post',userController.mustBeLoggedIn,postController.create)
 router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)
+router.post('/create-post',userController.mustBeLoggedIn, postController.create)
+
 
 /*
 BEFORE CONTROLLERS WERE ADDED

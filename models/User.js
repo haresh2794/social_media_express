@@ -16,7 +16,7 @@ User.prototype.cleanUp = function(){ //Cleaning up before validation
 
     //get rid of any bogus properties ,example is user send a name: Haresh
     this.data = {
-        username: this.data.username.trim().toLowerCase(), //getting rid of spaces trim() and convrt to lowercase
+        username: this.data.username.trim().toLowerCase(), //getting rid of spaces trim()at bigining or end, and convrt to lowercase
         email: this.data.email.trim().toLowerCase(),
         password: this.data.password 
     }
