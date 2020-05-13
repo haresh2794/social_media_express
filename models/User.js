@@ -53,8 +53,7 @@ User.prototype.validate = async function(){ //Validating the data
 User.prototype.register = function(){
     //Step 1 = Validate User data
     this.cleanUp()
-    this.validate() //Since we added async func we need to make sure this func is completed before moving to next
-    
+    this.validate() //Since we added async func we need to make sure this func is completed before moving to
 
     //Step 2 = Only if there are no validation errors
     //Save user data into a database

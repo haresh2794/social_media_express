@@ -242,6 +242,11 @@ What are the consideration when using async feature?
  - Since we use async feature that will create the other features to take place parallely. So when using such func we need to make secure
  that the func is completed before moving to the other func.
 
+How to create a session at register?
+ - There were async func created with promises at validation register in User.js
+ - The usercontroller register was edited to grab the promise
+ - session created, and saved and redirected
+
 How to install Bootsrap?
  - Check the view folder to see how. We just copy pasted the stuff
 
