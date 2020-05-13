@@ -1,0 +1,11 @@
+How to reduce Duplication in {userlog: true, avatar: req.session.user.avatar, username: req.session.user.username} 
+at every Template file?
+ - app.use(function(req,res,next){
+    res.locals.user = req.session.user
+    next()
+}) //This will create a local user in the server file and the the router is called
+- In the userController is there is a session user created the mustBeLoggedIn will create a session.
+    This will be called before the router is redirected else the warn comes in.
+
+
+- Since we get the req.session.user as a local in the server we can leverage it in all templates. and not have a dif arg

@@ -1,10 +1,12 @@
 const express = require('express') //a const cannot be reassigned
 const session = require('express-session') //Importing Express Sessions
 const MongoStore = require('connect-mongo')(session)
-const router = require('./router')
+
+const app = express()
+
 const expressLayouts = require('express-ejs-layouts')
 const flash = require('connect-flash')
-const app = express()
+
 
 let sessionOptions = session({ //Setting up the configurations for session 
     secret: "JavaScript is so cool",
@@ -14,8 +16,16 @@ let sessionOptions = session({ //Setting up the configurations for session
     cookie: {maxAge: 1000*60*60*24, httpOnly:true} //How long the cook should stay
 })
 
+
 app.use(sessionOptions) //Using the session function
 app.use(flash()) //Leverage the flash
+
+app.use(function(req,res,next){
+    res.locals.user = req.session.user
+    next()
+})
+
+const router = require('./router')
 //console.log(router) //What is exported is going to get stored in the variable
 //router.meow() //We can use the function in the router file.
 

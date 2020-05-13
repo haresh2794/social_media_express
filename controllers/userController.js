@@ -11,6 +11,17 @@ module.exports = {
 
 const User = require('../models/User') //We need to mode a folder up... That why we have two dots
 
+
+exports.mustBeLoggedIn = function(req,res,next){ //to restrict urls
+    if(req.session.user){
+        next()
+    }else{
+        req.flash("errors","You must be logged in to perform this Action")
+        req.session.save(function(){
+            res.redirect('/')
+        })
+    }
+}
 //Using a promise
 exports.login = function(req,res){//This is what will be done in promise
     let user = new User(req.body) 
@@ -90,8 +101,8 @@ exports.register = function(req,res){
 
 exports.home = function(req,res){
     if (req.session.user){
-        res.render('userhome',{userlog: true, username: req.session.user.username, avatar: req.session.user.avatar}) //If it is inside a session //The true is returned to controller the header
+        res.render('userhome') //If it is inside a session //The true is returned to controller the header
     }else{
-        res.render('index', {userlog: false, errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
+        res.render('index', {errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
     }
 }

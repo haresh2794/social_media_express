@@ -12,6 +12,7 @@ module.exports = { //this will when it is called inside the file
 const express = require('express')
 const router = express.Router() //This will export a mini app kindof thing to routtes This is the Router Express
 const userController = require('./controllers/userController')
+const postController = require('./controllers/postController')
 
 
 router.get('/', userController.home)
@@ -19,7 +20,9 @@ router.post('/login',userController.login) //a Login post request from the view
 router.post('/register',userController.register) //We forwarded the register form action to the /register url. Here we use the function in the userController
 router.post('/logout',userController.logout)
 
-
+//POST RELATED ROUTES
+router.post('/create-post',userController.mustBeLoggedIn,postController.create)
+router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)
 
 /*
 BEFORE CONTROLLERS WERE ADDED
