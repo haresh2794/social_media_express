@@ -9,3 +9,24 @@ at every Template file?
 
 
 - Since we get the req.session.user as a local in the server we can leverage it in all templates. and not have a dif arg
+
+How to create a post?
+ - in the form html sent a post req to the url 
+ - in the router redirect the post request to the controller create function
+ - in the postController require the model file
+ - Create the the post obj with the Post blue print under the create function.
+ - Leverage the create function in the model at the controller as a promise. Use then to res or catch res with the err.
+ - The catch will catch the reject
+ - the then() will cathc the resolve. 
+
+ Post.js
+ - In the Post model file create the blue print with the input and the data provided in the post obj created at the controller
+ - Create the methods with the prototype sytex
+ - we will need a validate and clean up before create
+ - the create should be a promise function.
+ - If there are no errors resolve, else reject.
+ - Since mongoDB return a promise we leverage that in the after the insertOne and then catch
+
+How to add author feature?
+ - in the cleanup provide the  author: ObjectID(this.userId), to use ObjectID, we need to require mongoDB ObjectID at top. 
+

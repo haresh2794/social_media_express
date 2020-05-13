@@ -6,7 +6,7 @@ exports.viewCreateScreen = function(req,res){
 }
 
 exports.create = function(req,res){
-    let post = new Post(req.body) //Using the blue print post is created
+    let post = new Post(req.body,req.session.user._id) //Using the blue print post is created
     post.create().then(function(){
         res.send("New post created")
     }).catch(function(err){
