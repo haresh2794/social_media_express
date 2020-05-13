@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs") //Hashing package
 const userCollection = require('../db').db().collection('users')
 //const userCollection = require('../db').collection('users')
 const validator = require("validator")
+const md5 = require('md5')
 const User = function(data){ //This is the constructor
     this.data = data
     this.errors = [] //We use this at validation
@@ -65,6 +66,7 @@ User.prototype.register = function(){
         let salt = bcrypt.genSaltSync(10) //Step 1 creating the salt
         this.data.password = bcrypt.hashSync(this.data.password,salt) // Updating the password with salt
         await userCollection.insertOne(this.data) //This will run to save to the DB is there is no error
+        this.getAvatar() //Call avatar
         resolve()
     } else{
         reject(this.errors)
@@ -78,6 +80,8 @@ User.prototype.login = function(){
         this.cleanUp() //Resolve will send a positive message, and reject will send a negagtive msg, resolve and reject are indust standard
         userCollection.findOne({username: this.data.username}).then((attemtedUser)=>{
             if (attemtedUser && bcrypt.compareSync(this.data.password,attemtedUser.password)){ //using Hash comparison //attemtedUser.password == this.data.password We deleted this after &&
+                this.data = attemtedUser
+                this.getAvatar() //Call avatar
                 resolve("Congratsx") 
             }else{
                 reject("Invalid Username/Password")
@@ -90,6 +94,9 @@ User.prototype.login = function(){
 
 }
 
+User.prototype.getAvatar = function(){
+    this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`//128 is the size it is not in quotes but ``
+}
 
 /**
 TRADITIONAL CALL BACK APPROCH

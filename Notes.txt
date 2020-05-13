@@ -247,6 +247,16 @@ How to create a session at register?
  - The usercontroller register was edited to grab the promise
  - session created, and saved and redirected
 
+Why did the user signed in auto with oly user name at reg?
+ - resolve, reject order was changed (HHAHAHAHAHA)
+
+How to add gravatar?
+ - User.prototype.getAvatar = function(){
+     this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`
+  }
+ - npm install md5
+ - require that in User.js
+ - add the this.getAvatar() at login and reg in model files | here we dont ask for the email at sign in so add the this.data = attemtedUser at login model
 How to install Bootsrap?
  - Check the view folder to see how. We just copy pasted the stuff
 

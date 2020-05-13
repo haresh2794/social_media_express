@@ -15,7 +15,7 @@ const User = require('../models/User') //We need to mode a folder up... That why
 exports.login = function(req,res){//This is what will be done in promise
     let user = new User(req.body) 
     user.login().then(function(result){
-        req.session.user = {favColor: "Blue", username: user.data.username} //This is how the sessiion is leverged
+        req.session.user = {avatar: user.avatar, username: user.data.username} //This is how the sessiion is leverged
         req.session.save(function(){ //The above will auto save, but we will save manually and then gve the asyn function some time to do it and then redirect to the url
             res.redirect('/')
         }) //If it is resolves
@@ -51,7 +51,7 @@ exports.logout = function(req,res){
 exports.register = function(req,res){
     let user = new User(req.body) //the new operator will create a object with User() blueprint WE CAPITALIZE BLUE PRINT
     user.register().then(()=>{
-        req.session.user = {username: user.data.username}
+        req.session.user = {avatar: user.avatar, username: user.data.username}
         req.session.save(function(){
             res.redirect('/')
         })
@@ -90,7 +90,7 @@ exports.register = function(req,res){
 
 exports.home = function(req,res){
     if (req.session.user){
-        res.render('userhome',{userlog: true, username: req.session.user.username}) //If it is inside a session //The true is returned to controller the header
+        res.render('userhome',{userlog: true, username: req.session.user.username, avatar: req.session.user.avatar}) //If it is inside a session //The true is returned to controller the header
     }else{
         res.render('index', {userlog: false, errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
     }
