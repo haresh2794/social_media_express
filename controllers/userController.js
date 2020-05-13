@@ -50,14 +50,25 @@ exports.logout = function(req,res){
 
 exports.register = function(req,res){
     let user = new User(req.body) //the new operator will create a object with User() blueprint WE CAPITALIZE BLUE PRINT
-    user.register()
-    if (user.errors.length>0){ //if the array is not empty we send the error
-        user.errors.forEach(function(err){
+    user.register().then(()=>{
+        req.session.user = {username: user.data.username}
+        req.session.save(function(){
+            res.redirect('/')
+        })
+    }).catch((regErrors)=>{
+        regErrors.forEach(function(err){
             req.flash('RegErrors',err)
         })
         req.session.save(function(){
             res.redirect('/')
         })
+    })
+    
+}
+
+    /*
+    if (user.errors.length>0){ //if the array is not empty we send the error
+        
 
         /*THis can also be done but it will show mesg individually
         req.flash('errors',user.errors)
@@ -66,14 +77,16 @@ exports.register = function(req,res){
         })
         */
         //res.send(user.errors)
+    /*
     } else {
         res.send("Congrats") //Else sucess
     }
+    */
     //user.homePlanet //explanation
     //user.jump()
     // console.log(req.body)  //TEST LINE after adding the two blah line the console shows the object with data
     //res.send("Thanks for registering bitch")
-}
+
 
 exports.home = function(req,res){
     if (req.session.user){
