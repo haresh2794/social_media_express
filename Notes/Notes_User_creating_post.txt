@@ -28,5 +28,9 @@ How to create a post?
  - Since mongoDB return a promise we leverage that in the after the insertOne and then catch
 
 How to add author feature?
+ - in userController login and reg session creation add the  _id: user.data._id
+ - add the attribute to create the post obj and 
  - in the cleanup provide the  author: ObjectID(this.userId), to use ObjectID, we need to require mongoDB ObjectID at top. 
 
+How to add custom post view route?
+ - add the route get req with a post/:id this will take any value to :id and in the controller res with the render
