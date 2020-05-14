@@ -67,3 +67,24 @@ How to insert username and profile pic to profile page?
 How to set up the array of posts?
  - reusablePostQuery gives a array of post related to the lookup func. In this case the user ID.
  - Utilize that in the controller of user and add the array to the render obj. 
+
+How to know the user is a visitor or dif user?
+ - at a Local at the server with a condition if req.session.user, req.visitorId = req.session.user._id, else req.visitor = 0 (guest case)
+ - Call this at necessary location like, editing post, viewig edit symbol etc. The arg will be called at Post blue print
+ -  post.isVisitorOwner = post.authorId.equals(visitorId) will return true or false
+ - Here we are adding this arrt to every obj in the array of post. 
+
+How to edit a post?
+ - Give the edit page the get requst and render the page. through the router signal
+ - Give the save update form button the post request.
+ - Direct to the controller edit.
+ - Create a Post obj with the data
+ - Send it to the Update func in the Post Model anfd have a then and catch
+ - The edit must contain positive permission and no permission. The update will be a promise
+ - The update will use the findSingleByID which will have two arg,  requestedId and the userId
+ - This will return a array wiht the true or flse for isVisitorOwner
+ - Using this we can reject or update.
+ - The actual update is done in actually update.
+ - Here the text is cleaned and validated anf then findoneandupdated is givn with success and failure resolves
+ - The update resolve is done after. 
+ - The controller receives and and responds depding on the resolve value. 

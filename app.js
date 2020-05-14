@@ -20,8 +20,18 @@ let sessionOptions = session({ //Setting up the configurations for session
 app.use(sessionOptions) //Using the session function
 app.use(flash()) //Leverage the flash
 
+
+
+//Will start at every req
 app.use(function(req,res,next){
-    res.locals.user = req.session.user
+    res.locals.errors = req.flash("errors")
+    res.locals.success = req.flash("success")
+
+    //make current user id available on the req obj
+    if(req.session.user){req.visitorId = req.session.user._id} else{req.visitorId = 0}
+
+    //make user session data available from within templates
+    res.locals.user = req.session.user //this can be accessed in our ejs
     next()
 })
 

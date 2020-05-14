@@ -103,7 +103,7 @@ exports.home = function(req,res){
     if (req.session.user){
         res.render('userhome') //If it is inside a session //The true is returned to controller the header
     }else{
-        res.render('index', {errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
+        res.render('index',  {regErrors: req.flash('RegErrors')}) //Else show this
     }
 }
 
