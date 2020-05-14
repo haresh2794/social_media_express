@@ -7,10 +7,15 @@ exports.viewCreateScreen = function(req,res){
 
 exports.create = function(req,res){
     let post = new Post(req.body,req.session.user._id) //Using the blue print post is created
-    post.create().then(function(){
-        res.send("New post created")
+    post.create().then(function(newId){
+        req.flash("success","New Post Created")
+        req.session.save(()=>{
+            res.redirect(`/post/${newId}`)
+        })
+       
     }).catch(function(err){
-        res.send(err)
+        err.forEach(err => req.flash("errors",err))
+        req.session.save(()=> res.redirect("/create-post"))
     })
 }   
 
@@ -27,7 +32,14 @@ exports.viewSingle = async function(req,res){
 exports.viewEditScreen = async function(req,res){
     try{
         let post = await Post.findSingleById(req.params.id,req.visitorId)
-    res.render('edit-post', {post:post})
+        if(post.authorId==req.visitorId){
+            res.render('edit-post', {post:post})
+        }else{
+            req.flash("errors","You do not have permission")
+            req.session.save(()=>{
+                res.redirect('/')
+            })
+        }
     }catch{
         res.render('404')
     }

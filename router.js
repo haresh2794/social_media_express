@@ -24,8 +24,8 @@ router.post('/logout',userController.logout)
 router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)
 router.post('/create-post', userController.mustBeLoggedIn, postController.create)
 router.get('/post/:id', postController.viewSingle) //View post with particular ID, and is viewable to the public
-router.get('/post/:id/edit',postController.viewEditScreen)
-router.post('/post/:id/edit',postController.edit)
+router.get('/post/:id/edit',userController.mustBeLoggedIn, postController.viewEditScreen)
+router.post('/post/:id/edit',userController.mustBeLoggedIn, postController.edit)
 //Profile related routes
 router.get('/profile/:username',userController.ifUserExist, userController.profileScreen) //User profile page
 

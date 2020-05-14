@@ -32,8 +32,8 @@ Post.prototype.create = function(){
         this.cleanup()
         this.validate()
         if(!this.errors.length){
-            postsCollection.insertOne(this.data).then(()=>{
-                resolve()
+            postsCollection.insertOne(this.data).then((info)=>{
+                resolve(info.ops[0]._id)
             }).catch(()=>{
                 this.errors.push("Please Try again")
                 reject(this.errors)
