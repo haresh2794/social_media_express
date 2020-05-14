@@ -34,3 +34,17 @@ How to add author feature?
 
 How to add custom post view route?
  - add the route get req with a post/:id this will take any value to :id and in the controller res with the render
+
+How to create functionalities to view the post by Id?
+ - In the post controller add a function that will view the post. 
+ - create a post obj not with the blue print but just a call method inside
+ - call the func and create it in the model. 
+ - The findSingleByID func is a promise fucn we will check the db for post by id using ObjectID, else return false. 
+ - Security first check for maliciaos code and return reject is false
+ - resolve with the post
+ - call the render with the post obj which will be received by temp to further process at ejs.
+
+Why is it challenging to pull the user gravatar and unsername?
+ - Because we have only save the userId with the post
+ - and the req.session cannot be used because it is not the auther who is going to read the post (ComedyHAHAHAH)
+
