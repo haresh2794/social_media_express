@@ -3,9 +3,13 @@ const userCollection = require('../db').db().collection('users')
 //const userCollection = require('../db').collection('users')
 const validator = require("validator")
 const md5 = require('md5')
-const User = function(data){ //This is the constructor
+const User = function(data,getAvatar){ //This is the constructor
     this.data = data
     this.errors = [] //We use this at validation
+    if(getAvatar == undefined){
+        getAvatar = false
+    }
+    if(getAvatar){this.getAvatar()}
 }
 
 User.prototype.cleanUp = function(){ //Cleaning up before validation
