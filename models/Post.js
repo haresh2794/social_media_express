@@ -7,8 +7,6 @@ let Post = function(data,userId){
     this.userId = userId
 }
 
-
-
 Post.prototype.cleanup = function(){
     if(typeof(this.data.title) != "string"){this.data.title = ""}
     if(typeof(this.data.body) != "string"){this.data.body = ""}
@@ -26,7 +24,6 @@ Post.prototype.cleanup = function(){
 Post.prototype.validate = function(){
    if (this.data.title == ""){this.errors.push("You must provide a titile")}
    if (this.data.body == ""){this.errors.push("You must provide post content")}
-
 }
 
 Post.prototype.create = function(){
@@ -46,15 +43,9 @@ Post.prototype.create = function(){
     })
 }
 
-//This is not a prototype, This is a method independnt, A functio is a obj in js
-Post.findSingleById = function(id){
+Post.reusablePostQuery = function(uniqueOperations){
     return new Promise(async function(resolve,reject){
-        if(typeof(id) != "string" || !ObjectID.isValid(id)) {
-            reject()
-            return
-        }
-        let posts = await postsCollection.aggregate([
-            {$match: {_id: new ObjectID(id)}},
+        let aggOperations = uniqueOperations.concat([
             {$lookup: {from: "users", localField: "author", foreignField: "_id", as: "authorDocument"}},
             {$project: {
                 title: 1,
@@ -62,17 +53,32 @@ Post.findSingleById = function(id){
                 createDate: 1,
                 author: {$arrayElemAt: ["$authorDocument",0]} //0 for the first element at and on element obj
             }}
-        ]).toArray()
+        ])
+        let posts = await postsCollection.aggregate(aggOperations).toArray()
         //cleanup author property in each obj
         posts = posts.map(function(post){
             post.author = {
                 username: post.author.username,
-                avatar: new User(post.author,true).avatar
+                avatar: new User(post.author,true).avatar //Obj creation with avatar set to true
             }
             return post
         })
 
 
+        resolve(posts)
+        
+    })
+}
+//This is not a prototype, This is a method independnt, A functio is a obj in js
+Post.findSingleById = function(id){
+    return new Promise(async function(resolve,reject){
+        if(typeof(id) != "string" || !ObjectID.isValid(id)) {
+            reject()
+            return
+        }
+        let posts = await Post.reusablePostQuery([
+            {$match: {_id: new ObjectID(id)}}
+        ])
         //let post = await postsCollection.findOne({_id: new ObjectID(id)}) //Previos version
         if(posts.length){
             console.log(posts[0])
@@ -82,6 +88,16 @@ Post.findSingleById = function(id){
         }
     })
 }
+
+
+Post.findByAuthorId = function(authorId){
+    return Post.reusablePostQuery([
+        {$match: {author: authorId}},
+        {$sort: {createDate: -1}}
+    ])
+}
+
+
 
 module.exports = Post
 

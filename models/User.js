@@ -6,7 +6,7 @@ const md5 = require('md5')
 const User = function(data,getAvatar){ //This is the constructor
     this.data = data
     this.errors = [] //We use this at validation
-    if(getAvatar == undefined){
+    if(getAvatar == undefined){//To retrive the gravatar
         getAvatar = false
     }
     if(getAvatar){this.getAvatar()}
@@ -117,6 +117,34 @@ User.prototype.login = function(callback){
     })
 }
 */
+
+User.findByUsername = function(username){ //For user profile page view
+    return new Promise(function(resolve,reject){
+        if(typeof(username) != "string"){
+            reject()
+            return //do not process anything after
+        }
+        
+        userCollection.findOne({username: username}).then(function(userDocs){
+            if(userDocs){
+                userDocs = new User(userDocs,true)
+                userDocs = {
+                    _id: userDocs.data._id,
+                    username: userDocs.data.username,
+                    avatar: userDocs.avatar
+                }
+                resolve(userDocs)
+
+            }
+    
+        }).catch(function(){
+            reject()
+        })
+        
+    })
+}
+
+
 
 module.exports = User // This will require to connect into a other file,, here it is controller
 

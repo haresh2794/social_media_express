@@ -48,3 +48,22 @@ Why is it challenging to pull the user gravatar and unsername?
  - Because we have only save the userId with the post
  - and the req.session cannot be used because it is not the auther who is going to read the post (ComedyHAHAHAH)
 
+How to create lookup with MongoDB?
+ - Using the aggregate function we form match, lookup and project obj. 
+ - Then convert it to a array.
+ - The project will combine the author into one obj
+ - Map the array to a new array with the necessary elements.
+ - Import the user controller to retrive the avatar. Here a new obj is created with the post author, and avatar true that will retrive a avatar of the user.
+ The default is set to undefined
+
+How to insert username and profile pic to profile page?
+ - This is a bit challenging, we need to look for the existance of the profile first.
+ - Then render the profile page with the details.
+ - To do this in the find by username funtion must be called in model and the return should contain the username and avatar.
+ - Else reject to return.
+ - Use this return in the next() and the field as the element for render.
+ - Here the user is created with the new data and the elements are assigned to the user again to only have the required stuff
+
+How to set up the array of posts?
+ - reusablePostQuery gives a array of post related to the lookup func. In this case the user ID.
+ - Utilize that in the controller of user and add the array to the render obj. 

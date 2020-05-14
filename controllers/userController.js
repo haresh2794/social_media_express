@@ -10,7 +10,7 @@ module.exports = {
 */
 
 const User = require('../models/User') //We need to mode a folder up... That why we have two dots
-
+const Post = require('../models/Post')
 
 exports.mustBeLoggedIn = function(req,res,next){ //to restrict urls
     if(req.session.user){
@@ -105,4 +105,25 @@ exports.home = function(req,res){
     }else{
         res.render('index', {errors: req.flash('errors'), regErrors: req.flash('RegErrors')}) //Else show this
     }
+}
+
+exports.ifUserExist = function(req,res,next){ 
+    User.findByUsername(req.params.username).then(function(userDoc){ //params is the value with :
+        req.profileUser = userDoc //assign the return to req
+        next() //go to next
+    }).catch(function(){
+        res.render('404')
+    })
+}
+
+exports.profileScreen = function(req,res){
+    Post.findByAuthorId(req.profileUser._id).then(function(posts){
+        res.render('profile',{
+            posts: posts,
+            profileUsername: req.profileUser.username,
+            profileAvatar: req.profileUser.avatar
+        })
+    }).catch(function(){
+        res.render('404')
+    })
 }

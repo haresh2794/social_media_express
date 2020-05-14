@@ -22,9 +22,11 @@ router.post('/logout',userController.logout)
 
 //POST RELATED ROUTES
 router.get('/create-post', userController.mustBeLoggedIn, postController.viewCreateScreen)
-router.post('/create-post',userController.mustBeLoggedIn, postController.create)
-router.get('/post/:id',postController.viewSingle) //View post with particular ID, and is viewable to the public
+router.post('/create-post', userController.mustBeLoggedIn, postController.create)
+router.get('/post/:id', postController.viewSingle) //View post with particular ID, and is viewable to the public
 
+//Profile related routes
+router.get('/profile/:username',userController.ifUserExist, userController.profileScreen) //User profile page
 
 
 /*
