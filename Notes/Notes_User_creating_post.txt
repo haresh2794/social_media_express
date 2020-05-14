@@ -88,3 +88,20 @@ How to edit a post?
  - Here the text is cleaned and validated anf then findoneandupdated is givn with success and failure resolves
  - The update resolve is done after. 
  - The controller receives and and responds depding on the resolve value. 
+
+How to redirect a created post to the created post?
+ - When the post is created in Post model it return promise with several data, resolve it with  resolve(info.ops[0]._id)
+ - Use that in controller at the create include a parament as newID use in a dynamic feature to redirect.
+
+Why it is necessary to escape HTML tags?
+ - Because we can be vunerable to scripting attacks.
+
+How to add Markdown to the app?
+ - npm install marked
+ - require it in the server file
+ - at app locals res.locals.filterUserHTML = function(content){
+                    return sanitizeHTML(markdown(content), {allowedTags: ['p','br','strong','italic','h1','h2','h3','h4','h5','h6','em','ol','ul','li'], allowedAttributes: []},)
+                    }
+ - In the post.body in the view post, add <%-filterUserHTML(post.body)%>
+ - Also requre sanitizeHTML at Post model and sanitize the title and body at clean up
+ - and do the same in app.js as above

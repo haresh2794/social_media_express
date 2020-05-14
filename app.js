@@ -1,9 +1,9 @@
 const express = require('express') //a const cannot be reassigned
 const session = require('express-session') //Importing Express Sessions
 const MongoStore = require('connect-mongo')(session)
-
+const markdown = require('marked')
 const app = express()
-
+const sanitizeHTML = require('sanitize-html')
 const expressLayouts = require('express-ejs-layouts')
 const flash = require('connect-flash')
 
@@ -24,6 +24,11 @@ app.use(flash()) //Leverage the flash
 
 //Will start at every req
 app.use(function(req,res,next){
+    res.locals.filterUserHTML = function(content){
+        return sanitizeHTML(markdown(content), {allowedTags: ['p','br','strong','italic','h1','h2','h3','h4','h5','h6','em','ol','ul','li'], allowedAttributes: []},)
+    }
+
+    //Make all errors and sucess mes availabel frm here as local
     res.locals.errors = req.flash("errors")
     res.locals.success = req.flash("success")
 
