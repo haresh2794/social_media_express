@@ -105,3 +105,11 @@ How to add Markdown to the app?
  - In the post.body in the view post, add <%-filterUserHTML(post.body)%>
  - Also requre sanitizeHTML at Post model and sanitize the title and body at clean up
  - and do the same in app.js as above
+
+How to delete a Post?
+ - Create the url from the HTML
+ - Dvert it to Post controller through router
+ - From the post controller divert it to the Post model.
+ - If the isVisitorOwner is true delete one, (From findSingleByID), Do it with try catch
+ - Else reject
+ - Then get the promise at then or catch at the controller
